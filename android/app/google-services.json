@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "987790512376",
+    "project_id": "uber-clone-15f3c",
+    "storage_bucket": "uber-clone-15f3c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987790512376:android:129514f5bfc021f7b3eb0d",
+        "android_client_info": {
+          "package_name": "com.logicDev.taxiLine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "987790512376-2s7vcfv07ndksebbu0g08dge88svam0j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7UJ9HWJeUVLgbPf_KrGWjtkhyb10a0dM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "987790512376-2s7vcfv07ndksebbu0g08dge88svam0j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
