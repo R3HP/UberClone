@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             }
           }),
       routes: {
-        CabScreen.routeName: (ctx) => const CabScreen(),
+        CabScreen.routeName: (ctx) =>  CabScreen(),
       },
     );
   }

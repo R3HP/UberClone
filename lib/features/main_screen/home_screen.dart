@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
+import 'package:taxi_line/features/cab/presentation/widgets/bottom_controll_pad.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -51,7 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: Padding(
           padding: const EdgeInsets.only(top: 35),
           child: FloatingActionButton.large(
-            onPressed: () => Navigator.of(context).pushNamed(CabScreen.routeName),
+            onPressed: () =>
+                Navigator.of(context).pushNamed(CabScreen.routeName),
             child: const Icon(Icons.add),
           )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -89,12 +91,69 @@ class HomePage extends StatelessWidget {
         Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
-
           ),
           elevation: 12,
           child: const Text('here would be an image'),
         ),
-        ElevatedButton(onPressed: (){}, child: const Text('take a cab'))
+        ElevatedButton(onPressed: () {}, child: const Text('take a cab')),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListTile(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+              side: BorderSide(color: Theme.of(context).primaryColor,),
+            ),
+            leading: Image.asset('assets/images/uber_plus.jpg'),
+            title: const Text('UberPlus'),
+            subtitle: Text('KM'),
+            trailing: Text('\$'),
+            onTap: () {},
+          ),
+        ),
+        Expanded(
+          child: Stack(
+            children: [
+              Container(
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+        color: Colors.white,
+        backgroundBlendMode: BlendMode.srcOver
+      ),
+      child: Column(
+        children: [
+          ListTile(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),side: BorderSide(color: Colors.cyan)),
+            title: Text('ssssss'),
+          ),
+          ListTile(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),side: BorderSide(color: Colors.cyan)),
+            title: Text('ssssss'),
+          ),
+        ],
+      ),
+    )
+              // Container(
+              //   padding: EdgeInsets.all(20),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.vertical(top: Radius.circular(25))
+              //   ),
+              //   child: Column(
+              //     children: [
+              //       ListTile(
+              //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),side: BorderSide(color: Colors.cyan)),
+              //         title: Text('ssssss'),
+              //       ),
+              //       ListTile(
+              //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),side: BorderSide(color: Colors.cyan)),
+              //         title: Text('ssssss'),
+              //       ),
+              //     ],
+              //   ),
+              // )
+            ],
+          ),
+        )
       ],
     );
   }

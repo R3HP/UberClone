@@ -41,6 +41,7 @@ class GeoCodingDataSourceImpl implements GeoCodingDataSource {
     }
     final responseMap = json.decode(response.data) as Map<String, dynamic>;
     final features = responseMap['features'] as List<dynamic>;
-    return Address.fromMap(features[0]);
+    // using copy with we raturn an address with exact latLon as requested other wise a latLng that is returned by GeoCoding Api is returned 
+    return Address.fromMap(features[0]).copyWith(latitude: addressLatitude,longitude: addressLongitude);
   }
 }
