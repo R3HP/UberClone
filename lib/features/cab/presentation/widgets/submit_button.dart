@@ -57,6 +57,7 @@ class SubmitButton extends ConsumerWidget {
                       cabController.finishTripPoint),
                 );
                 cabController.getDirectionForPoints();
+                mapController.move(mapCurrrentPoint, 18.4);
                 mapController.move(centerZoom.center, centerZoom.zoom);
                 // showModalBottomSheet(
                 //     context: context,

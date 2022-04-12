@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxi_line/core/service_locator.dart';
 import 'package:taxi_line/features/cab/data/model/address.dart';
-import 'package:taxi_line/features/cab/presentation/controllers/cab_controller.dart';
 import 'package:taxi_line/features/cab/presentation/controllers/geo_code_controller.dart';
 import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
 
-// final cabControllerProvider = ChangeNotifierProvider.autoDispose<CabController>((ref) => CabController(),);
 
 class SearchBar extends ConsumerWidget {
   final FocusNode searchTextFieldFocusNode;
@@ -28,33 +26,35 @@ class SearchBar extends ConsumerWidget {
           left: searchTextFieldFocusNode.hasFocus
               ? size.width / 12
               : size.width / 6.8,
-          right: searchTextFieldFocusNode.hasFocus ? size.width / 15 : 0),
+          right: searchTextFieldFocusNode.hasFocus ? size.width / 15 : size.width / 6.8),
       child: Card(
         elevation: 12,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(
-              focusNode: searchTextFieldFocusNode,
-              controller: searchTextFieldController,
-              textInputAction: TextInputAction.done,
-              onSubmitted: (value) async {
-                final addresses =
-                    await geoController.geoCodeAddressToLatLng(value);
-                showSearchAddressesDialog(context, addresses,ref);
-              },
-              decoration: InputDecoration(
-                fillColor: Colors.white,
-                filled: true,
-                label:
-                    Row(children: const [Icon(Icons.search), Text('Search')]),
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                constraints:
-                    BoxConstraints(maxHeight: 50, maxWidth: size.width * 0.7),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none),
+            Expanded(
+              child: TextField(
+                focusNode: searchTextFieldFocusNode,
+                controller: searchTextFieldController,
+                textInputAction: TextInputAction.done,
+                onSubmitted: (value) async {
+                  final addresses =
+                      await geoController.geoCodeAddressToLatLng(value);
+                  showSearchAddressesDialog(context, addresses,ref);
+                },
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  label:
+                      Row(children: const [Icon(Icons.search), Text('Search')]),
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  constraints:
+                      BoxConstraints(maxHeight: 50, maxWidth: size.width * 0.7),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none),
+                ),
               ),
             ),
             
@@ -63,7 +63,6 @@ class SearchBar extends ConsumerWidget {
                 onPressed: () async {
                   final addresses = await geoController
                       .geoCodeAddressToLatLng(searchTextFieldController.text);
-                  // newMethod(context, addresses);
                   showSearchAddressesDialog(context, addresses,ref);
                 },
                 icon: const Icon(
@@ -92,25 +91,14 @@ class SearchBar extends ConsumerWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                             onTap: () {
-                              if (geoController.pointLatitude == null) {
-                                ref.read(cabControllerProvider).startTripAddress= addresses[index];
-                                // geoController.pointLatitude =
-                                //     addresses[index].latitude;
-                                // geoController.pointLongitude =
-                                //     addresses[index].longitude;
-                                // startTextFieldController.text =
-                                //     addresses[index].placeText;
+                              final cabController = ref.read(cabControllerProvider);
+                              if (cabController.startTripAddress == null) {
+                                cabController.startTripAddress= addresses[index];
+                                Navigator.of(context).pop();
                               } else {
-                                ref.read(cabControllerProvider).finishTripAddress = addresses[index];
-                                // geoController.pointLatitude =
-                                //     addresses[index].latitude;
-                                // geoController.pointLongitude =
-                                //     addresses[index].longitude;
-                                // finishTextFieldController.text =
-                                //     addresses[index].placeText;
+                                cabController.finishTripAddress = addresses[index];
+                                Navigator.of(context).pop();
                               }
-                              // location and text controller should be set Here
-                              // a way of finding if its starting poin or finishing point
                             },
                           ),
                         ),

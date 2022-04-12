@@ -15,7 +15,8 @@ class CancelButton extends ConsumerWidget {
       left: 0,
       child: Container(
         margin: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.045,
+            top: 
+                 MediaQuery.of(context).size.height * 0.125,
             left: MediaQuery.of(context).size.width * 0.035),
         child: Card(
           elevation: 12,

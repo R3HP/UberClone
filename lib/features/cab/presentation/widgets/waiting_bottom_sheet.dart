@@ -47,56 +47,64 @@ class WaitingBottomSheet extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(bottom: size.height * 0.15),
-                      child: FlutterMap(
-                        mapController: _mapController,
-                        options: MapOptions(
-                          center: latlong.LatLng(0, 0),
-                          zoom: 18.4,
-                          onMapCreated: (mapController) {
-                            final centerZoom =
-                                mapController.centerZoomFitBounds(
-                                    LatLngBounds.fromPoints(trip.wayPoints
-                                        .map((wayPoint) => latlong.LatLng(
-                                            wayPoint.latitude,
-                                            wayPoint.longitude))
-                                        .toList()));
-                            mapController.onReady.then((value) => mapController
-                                .move(centerZoom.center, centerZoom.zoom));
-                          },
-                          controller: _mapController,
+                      child: FutureBuilder(
+                        future: ,
+                        builder: (ctx,initial) =>
+                         FlutterMap(
+                          mapController: _mapController,
+                          options: MapOptions(
+                            center: latlong.LatLng(0, 0),
+                            zoom: 18.4,
+                            onMapCreated: (mapController) {
+                              final centerZoom =
+                                  mapController.centerZoomFitBounds(
+                                      LatLngBounds.fromPoints(trip.wayPoints
+                                          .map((wayPoint) => latlong.LatLng(
+                                              wayPoint.latitude,
+                                              wayPoint.longitude))
+                                          .toList()));
+                              mapController.onReady.then((value) => mapController
+                                  .move(centerZoom.center, centerZoom.zoom));
+                            },
+                            controller: _mapController,
+                          ),
+                          children: [
+                            TileLayerWidget(
+                              options: TileLayerOptions(
+                                  urlTemplate:
+                                      'https://api.mapbox.com/styles/v1/r3zahp/cl04yaeqh000a15l2i8zdxib7/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicjN6YWhwIiwiYSI6ImNrYnhmc2JhbzA1bTAyc3Fubm5paHZqd2sifQ.kiQxWPBep95bN00r41U7Rg',
+                                  additionalOptions: {
+                                    'accessToken':
+                                        'pk.eyJ1IjoicjN6YWhwIiwiYSI6ImNrYnhmc2JhbzA1bTAyc3Fubm5paHZqd2sifQ.kiQxWPBep95bN00r41U7Rg',
+                                    'id': 'mapbox.mapbox-streets-v8'
+                                  }),
+                            ),
+                            StreamBuilder(
+                              stream: ,
+                              initialData: initial,
+                              builder: (ctx,streamSnapShot) =>  MarkerLayerWidget(
+                                options: MarkerLayerOptions(
+                                    markers: snapshot.data!.wayPoints
+                                        .map<Marker>((wayPoint) => Marker(
+                                            point: latlong.LatLng(wayPoint.latitude,
+                                                wayPoint.longitude),
+                                            builder: (ctx) => const Icon(
+                                                  Icons.location_on,
+                                                  color: Colors.green,
+                                                )))
+                                        .toList()),
+                              ),
+                            ),
+                            PolylineLayerWidget(
+                              options: PolylineLayerOptions(polylines: [
+                                Polyline(
+                                    points: trip.route.geometryCordinates,
+                                    color: Colors.blue,
+                                    strokeWidth: 4)
+                              ]),
+                            )
+                          ],
                         ),
-                        children: [
-                          TileLayerWidget(
-                            options: TileLayerOptions(
-                                urlTemplate:
-                                    'https://api.mapbox.com/styles/v1/r3zahp/cl04yaeqh000a15l2i8zdxib7/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicjN6YWhwIiwiYSI6ImNrYnhmc2JhbzA1bTAyc3Fubm5paHZqd2sifQ.kiQxWPBep95bN00r41U7Rg',
-                                additionalOptions: {
-                                  'accessToken':
-                                      'pk.eyJ1IjoicjN6YWhwIiwiYSI6ImNrYnhmc2JhbzA1bTAyc3Fubm5paHZqd2sifQ.kiQxWPBep95bN00r41U7Rg',
-                                  'id': 'mapbox.mapbox-streets-v8'
-                                }),
-                          ),
-                          MarkerLayerWidget(
-                            options: MarkerLayerOptions(
-                                markers: snapshot.data!.wayPoints
-                                    .map<Marker>((wayPoint) => Marker(
-                                        point: latlong.LatLng(wayPoint.latitude,
-                                            wayPoint.longitude),
-                                        builder: (ctx) => const Icon(
-                                              Icons.location_on,
-                                              color: Colors.green,
-                                            )))
-                                    .toList()),
-                          ),
-                          PolylineLayerWidget(
-                            options: PolylineLayerOptions(polylines: [
-                              Polyline(
-                                  points: trip.route.geometryCordinates,
-                                  color: Colors.blue,
-                                  strokeWidth: 4)
-                            ]),
-                          )
-                        ],
                       ),
                     ),
                     Positioned(
@@ -177,38 +185,6 @@ class WaitingBottomSheet extends StatelessWidget {
                     ));
           }
         });
-    // return BottomSheet(
-    //     elevation: 20,
-    //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-    //     constraints:
-    //         BoxConstraints(minHeight: size.height, minWidth: size.width),
-    //     enableDrag: false,
-    //     onClosing: () {},
-    //     builder: (ctx) => Container(
-    //           decoration: const BoxDecoration(
-    //             color: Colors.white,
-    //           ),
-    //           child: Column(
-    //             mainAxisAlignment: MainAxisAlignment.center,
-    //             children: [
-    //               LottieBuilder.asset(determineRandomAnimation(), repeat: true),
-    //               const Text('Our Drivers Are Coming To Get You ASAP'),
-    //               CircleAvatar(
-    //                 child: IconButton(
-    //                     icon: const Icon(Icons.cancel_outlined),
-    //                     onPressed: () {
-    //                       tripController
-    //                           .deleteTripRequestFromDataBase(trip.id!)
-    //                           .then((value) => Navigator.of(context).pop());
-    //                     }),
-    //               ),
-    //               const Text('Cancel'),
-    //               ElevatedButton(onPressed: (){
-    //                 tripController.updateTripInDataBase(trip,price: trip.price + 3);
-    //               }, child: const Text('In A Hurry ? Add a 3\$ tip'))
-    //             ],
-    //           ),
-    //         ));
   }
 
   String determineRandomAnimation() {

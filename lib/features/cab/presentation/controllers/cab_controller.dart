@@ -18,12 +18,14 @@ class CabController with ChangeNotifier {
       return LatLng(
           _finishTripAddress!.latitude, _finishTripAddress!.longitude);
     }
+    return null;
   }
 
   LatLng? get startTripPoint {
     if (_startTripAddress != null) {
       return LatLng(_startTripAddress!.latitude, _startTripAddress!.longitude);
     }
+    return null;
   }
 
 

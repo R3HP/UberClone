@@ -24,6 +24,7 @@ import 'package:taxi_line/features/cab/domain/usecase/geo_coding_address_to_latl
 import 'package:taxi_line/features/cab/domain/usecase/geo_coding_latlng_to_address_use_case.dart';
 import 'package:taxi_line/features/cab/domain/usecase/get_directions_use_case.dart';
 import 'package:taxi_line/features/cab/domain/usecase/get_driver_detail_use_case.dart';
+import 'package:taxi_line/features/cab/domain/usecase/get_drivers_location_use_case.dart';
 import 'package:taxi_line/features/cab/domain/usecase/get_pended_trip_use_case.dart';
 import 'package:taxi_line/features/cab/domain/usecase/post_trip_request_use_case.dart';
 import 'package:taxi_line/features/cab/domain/usecase/update_trip_use_case.dart';
@@ -95,10 +96,11 @@ setUp(){
   // Driver 
 
   // Controller 
-  sl.registerLazySingleton<DriverController>(() => DriverController(getDriverDetailUseCase: sl()));
+  sl.registerLazySingleton<DriverController>(() => DriverController(getDriverDetailUseCase: sl(),getAvailableDriversLocationUseCase: sl()));
 
   // UseCase
   sl.registerLazySingleton<GetDriverDetailUseCase>(() => GetDriverDetailUseCase(driverRepository: sl()));
+  sl.registerLazySingleton<GetAvailableDriversLocationUseCase>(() => GetAvailableDriversLocationUseCase(driverRepository: sl()));
 
   // Repository
   sl.registerLazySingleton<DriverRepository>(() => DriverRepositoryImpl(dataSource: sl()));

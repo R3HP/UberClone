@@ -37,18 +37,26 @@ class _CabScreenState extends State<CabScreen> {
   void initState() {
     super.initState();
     Location.instance.onLocationChanged.listen((event) {
-      print(currentLocationData == null);
-      if (currentLocationData != null) {
-        if (currentLocationData!.latitude != event.latitude &&
-            currentLocationData!.longitude != event.longitude) {
-          setState(() {
-            // authController.currentLocationData = event;
-            currentLocationData = event;
-          });
-          _mapController.move(latlong.LatLng(currentLocationData!.latitude!,currentLocationData!.longitude!), 18.4);
-        }
-      }
+      changeCurrentLocationDataIfItsNotNull(event);
     });
+  }
+
+  void changeCurrentLocationDataIfItsNotNull(LocationData event) {
+    print(currentLocationData == null);
+    if (currentLocationData != null) {
+      changeLocationDataIfEventDataIsDiffrentFromLocationData(event);
+    }
+  }
+
+  void changeLocationDataIfEventDataIsDiffrentFromLocationData(LocationData event) {
+     if (currentLocationData!.latitude != event.latitude &&
+        currentLocationData!.longitude != event.longitude) {
+      setState(() {
+        // authController.currentLocationData = event;
+        currentLocationData = event;
+      });
+      _mapController.move(latlong.LatLng(currentLocationData!.latitude!,currentLocationData!.longitude!), 18.4);
+    }
   }
 
   @override
@@ -61,10 +69,10 @@ class _CabScreenState extends State<CabScreen> {
               : Future.value(currentLocationData),
         builder: (ctx, AsyncSnapshot<LocationData?> locationSnapShot) {
           if (locationSnapShot.hasData) {
-            final startPosition = latlong.LatLng(
+            final userLocation = latlong.LatLng(
                   locationSnapShot.data!.latitude!,
                   locationSnapShot.data!.longitude!);
-              return SelectableMap(mapController: _mapController, startPosition: startPosition,);
+              return SelectableMap(userLocation: userLocation,);
           } else {
             if (locationSnapShot.hasError) {
               return Center(

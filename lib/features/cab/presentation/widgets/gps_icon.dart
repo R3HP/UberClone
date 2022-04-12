@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
 
-class GpsIcon extends StatelessWidget {
+class GpsIcon extends ConsumerWidget {
   final LatLng userLocation;
   final bool shouldGoUp;
   final MapController mapController;
@@ -15,8 +17,9 @@ class GpsIcon extends StatelessWidget {
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
   final Size size = MediaQuery.of(context).size;
+  final cabController = ref.read(cabControllerProvider);
     return Positioned(
       bottom: shouldGoUp == false
           ? size.height * 0.17 + 20
