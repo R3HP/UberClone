@@ -41,4 +41,24 @@ class DriverRepositoryImpl implements DriverRepository {
       throw ErrorDescription(exception.toString());
     }
   }
+
+  @override
+  Future<LatLng> getTripDriversLocation(String driverId) async {
+    try {
+      final location = await dataSource.getTripDriversLocationFromDB(driverId);
+      return location;
+    } catch (exception) {
+      throw ErrorDescription(exception.toString());
+    }
+  }
+
+  @override
+  Stream<LatLng> getTripDriversLocationStream(String driverId) {
+    try {
+      final stream = dataSource.getTripDriverLocationStreamFromDB(driverId);
+      return stream;
+    } catch (exception) {
+      throw ErrorDescription(exception.toString());
+    }
+  }
 }

@@ -48,7 +48,7 @@ class WaitingBottomSheet extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: size.height * 0.15),
                       child: FutureBuilder(
-                        future: ,
+                        future: driverController.getTripDriverLocation(trip.driverId!),
                         builder: (ctx,initial) =>
                          FlutterMap(
                           mapController: _mapController,
@@ -80,7 +80,7 @@ class WaitingBottomSheet extends StatelessWidget {
                                   }),
                             ),
                             StreamBuilder(
-                              stream: ,
+                              stream: driverController.getTripDriverLocationStream(trip.driverId!),
                               initialData: initial,
                               builder: (ctx,streamSnapShot) =>  MarkerLayerWidget(
                                 options: MarkerLayerOptions(
