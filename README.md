@@ -13,10 +13,10 @@ Clean Architecture,
 
 # Screen Shots
 
-![Screenshot (116)](https://user-images.githubusercontent.com/41432455/163998516-95b5bd43-e6f7-45b8-85ac-ca4d88e2fd5c.png = 250*250)
-![Screenshot (118)](https://user-images.githubusercontent.com/41432455/163998601-9e64602c-5f1f-4d6b-918c-1114f983bca5.png = 250*250)
-![Screenshot (119)](https://user-images.githubusercontent.com/41432455/163998682-8448fa38-814d-4499-b8c9-47e05051d26f.png = 250*250)
-![Screenshot (121)](https://user-images.githubusercontent.com/41432455/163998765-694db544-12b2-4be3-bf74-88a0fbbbdf3b.png = 250*250)
+![Screenshot (116)](https://user-images.githubusercontent.com/41432455/163998516-95b5bd43-e6f7-45b8-85ac-ca4d88e2fd5c.png)
+![Screenshot (118)](https://user-images.githubusercontent.com/41432455/163998601-9e64602c-5f1f-4d6b-918c-1114f983bca5.png)
+![Screenshot (119)](https://user-images.githubusercontent.com/41432455/163998682-8448fa38-814d-4499-b8c9-47e05051d26f.png)
+![Screenshot (121)](https://user-images.githubusercontent.com/41432455/163998765-694db544-12b2-4be3-bf74-88a0fbbbdf3b.png)
 
 
 
