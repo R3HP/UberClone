@@ -1,6 +1,12 @@
 # taxi_line
 
-A new Flutter project.
+An Uber Rider Clone App , Built with Mapbox, 
+RiverPod State Management,GPS Service with Location Package, 
+With Firebase,
+
+
+# Note To Provide Your MapBox Public Access Token in constants.dart File .
+
 
 ## Getting Started
 
