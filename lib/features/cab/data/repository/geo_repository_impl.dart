@@ -1,4 +1,4 @@
-import 'package:latlong2/latlong.dart';
+import 'package:taxi_line/core/error.dart';
 
 import 'package:taxi_line/features/cab/data/datasource/geo_coding_data_source.dart';
 import 'package:taxi_line/features/cab/data/model/address.dart';
@@ -16,8 +16,8 @@ class GeoCodingRepositoryImpl implements GeoCodingRepository {
     try{
       final response = await dataSource.geoCodeAddressToLatLng(address);
       return response;
-    }catch(error){
-      throw UnimplementedError();
+    }catch(exception) {
+      throw Error(message: exception.toString());
     }
   }
 
@@ -26,8 +26,8 @@ class GeoCodingRepositoryImpl implements GeoCodingRepository {
     try {
       final response = await dataSource.geoCodeLatLngToAddress(latitude, longitude);
       return response;
-    } catch (error) {
-      throw UnimplementedError();
+    } catch(exception) {
+      throw Error(message: exception.toString());
     }
   }
 

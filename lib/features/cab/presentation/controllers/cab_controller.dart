@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taxi_line/core/error.dart';
 import 'package:taxi_line/core/service_locator.dart';
 import 'package:taxi_line/features/cab/data/model/address.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:taxi_line/features/cab/data/model/direction.dart';
 import 'package:taxi_line/features/cab/domain/usecase/get_directions_use_case.dart';
+
+final cabControllerProvider = ChangeNotifierProvider.autoDispose<CabController>(
+    ((ref) => CabController()));
+
 
 class CabController with ChangeNotifier {
   Address? _startTripAddress;
@@ -28,7 +33,6 @@ class CabController with ChangeNotifier {
     return null;
   }
 
-
   set startTripAddress(Address? address) {
     _startTripAddress = address;
     notifyListeners();
@@ -47,11 +51,11 @@ class CabController with ChangeNotifier {
     return _finishTripAddress?.copyWith();
   }
 
-  Direction? get direction{
+  Direction? get direction {
     return _direction?.copyWith();
   }
 
-  void cancel(){
+  void cancel() {
     _finishTripAddress = null;
     _startTripAddress = null;
     _direction = null;
@@ -60,18 +64,15 @@ class CabController with ChangeNotifier {
 
   Future<void> getDirectionForPoints() async {
     if (_startTripAddress == null || _finishTripAddress == null) {
-      throw UnimplementedError();
+      throw Error(
+          message: 'StartTripAddress or FinishTripAddress has no value');
     }
-    try {
-      final direction = await getDirectionsUseCase(
-        LatLng(_startTripAddress!.latitude, _startTripAddress!.longitude),
-        LatLng(_finishTripAddress!.latitude, _finishTripAddress!.longitude),
-      );
-      _direction = direction;
-      notifyListeners();
-      return ;
-    } catch (error) {
-      throw UnimplementedError();
-    }
+    final direction = await getDirectionsUseCase(
+      LatLng(_startTripAddress!.latitude, _startTripAddress!.longitude),
+      LatLng(_finishTripAddress!.latitude, _finishTripAddress!.longitude),
+    );
+    _direction = direction;
+    notifyListeners();
+    return;
   }
 }

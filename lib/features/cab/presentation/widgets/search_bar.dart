@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxi_line/core/service_locator.dart';
 import 'package:taxi_line/features/cab/data/model/address.dart';
+import 'package:taxi_line/features/cab/presentation/controllers/cab_controller.dart';
 import 'package:taxi_line/features/cab/presentation/controllers/geo_code_controller.dart';
-import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
 
 
 class SearchBar extends ConsumerWidget {

@@ -50,7 +50,10 @@ class Driver {
     return Driver(
       id: map['id'],
       userName: map['userName'] ?? '',
-      profilePictureUrl: map['profilePictureUrl'] ?? '',
+      profilePictureUrl: map['profilePictureUrl'].isEmpty
+          ? 'https://firebasestorage.googleapis.com/v0/b/uber-clone-15f3c.appspot.com/o/taxi_driver.jpg?alt=media&token=e82dc1f5-2385-4b88-b955-cd59db05bd81'
+          : map['profilePictureUrl'] ??
+              'https://firebasestorage.googleapis.com/v0/b/uber-clone-15f3c.appspot.com/o/taxi_driver.jpg?alt=media&token=e82dc1f5-2385-4b88-b955-cd59db05bd81',
       credit: map['credit']?.toDouble() ?? 0.0,
       carModel: map['carModel'] ?? '',
       plateNumber: map['plateNumber'] ?? '',
@@ -69,6 +72,7 @@ class Driver {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
+
 
     return other is Driver &&
         other.id == id &&

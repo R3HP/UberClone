@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:taxi_line/core/service_locator.dart';
 import 'package:taxi_line/features/accounting/presentation/controller/auth_controller.dart';
+import 'package:taxi_line/features/accounting/presentation/widget/auth_form_text_form_field.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -35,7 +36,7 @@ class _AuthScreenState extends State<AuthScreen> {
           position: DecorationPosition.background,
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: ClipRRect(
                 clipBehavior: Clip.hardEdge,
                 borderRadius: BorderRadius.circular(20.0),
@@ -62,102 +63,62 @@ class _AuthScreenState extends State<AuthScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Text(
-                              'Use Your Email And Password to Login',
-                              style: TextStyle(
-                                color: Colors.deepOrangeAccent,
-                                fontSize: 18,
+                            FittedBox(
+                              child: Text(
+                                'Use Your Email And Password to Login',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor.withRed(180),
+                                  fontSize: 18,
+                                ),
                               ),
                             ),
                             const SizedBox(
                               height: 20,
                             ),
                             if (_isSignUp)
-                              TextFormField(
-                                controller: _userNameController,
-                                validator: ((value) {
-                                  if (value!.isEmpty || value.length < 8) {
-                                    return 'username must at least be 8 characters';
-                                  }
-                                  return null;
-                                }),
-                                textInputAction: TextInputAction.next,
-                                decoration: InputDecoration(
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.never,
-                                    labelText: 'Username',
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white),
+                              AuthFormTextFormField(
+                                textController: _userNameController,
+                                label: 'Username',
                               ),
                             if (_isSignUp)
                               const SizedBox(
                                 height: 20,
                               ),
-                            TextFormField(
-                              controller: _emailController,
-                              validator: ((value) {
-                                if (value!.isEmpty || value.length < 8) {
-                                  return 'email must at least be 8 characters';
-                                }
-                                if (!value.contains('@')) {
-                                  return 'email not valid. @ is missed';
-                                }
-                                return null;
-                              }),
-                              textInputAction: TextInputAction.next,
-                              decoration: InputDecoration(
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
-                                  labelText: 'Email',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white),
-                            ),
+                            AuthFormTextFormField(
+                                textController: _emailController,
+                                label: 'Email'),
                             const SizedBox(
                               height: 20,
                             ),
-                            TextFormField(
-                              controller: _passwordController,
-                              validator: ((value) {
-                                if (value!.isEmpty || value.length < 8) {
-                                  return 'password must at least be 8 characters';
-                                }
-                              }),
-                              obscureText: true,
-                              textInputAction: TextInputAction.done,
-                              decoration: InputDecoration(
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
-                                  labelText: 'Password',
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  filled: true,
-                                  fillColor: Colors.white),
-                            ),
+                            AuthFormTextFormField(
+                                textController: _passwordController,
+                                label: 'Password'),
                             TextButton(
                                 onPressed: () {
                                   setState(() {
                                     _isSignUp = !_isSignUp;
                                   });
                                 },
-                                child: Text(
-                                  _isSignUp
-                                      ? 'Already A member ? Login'
-                                      : 'Don\' Have An Account Yet ? Create now',
-                                  style: const TextStyle(color: Colors.blue),
+                                child: FittedBox(
+                                  child: Text(
+                                    _isSignUp
+                                        ? 'Already A member ? Login'
+                                        : 'Don\'t Have An Account Yet ? Create now',
+                                    style: TextStyle(color: Theme.of(context).primaryColor.withRed(180)),
+                                  ),
                                 )),
                             ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
                                     if (_isSignUp) {
-                                      authController.createUser(_userNameController.text, _emailController.text, _passwordController.text);
-                                    }else{
-                                      authController.loginWithEmailAndPassword(_emailController.text, _passwordController.text);
+                                      authController.createUser(
+                                          _userNameController.text,
+                                          _emailController.text,
+                                          _passwordController.text);
+                                    } else {
+                                      authController.loginWithEmailAndPassword(
+                                          _emailController.text,
+                                          _passwordController.text);
                                     }
                                   }
                                 },
@@ -176,3 +137,4 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 }
+

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:taxi_line/core/service_locator.dart';
+import 'package:taxi_line/features/cab/presentation/controllers/cab_controller.dart';
 import 'package:taxi_line/features/cab/presentation/controllers/trip_controller.dart';
-import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
+import 'package:taxi_line/features/cab/presentation/screens/waiting_screen.dart';
 import 'package:taxi_line/features/cab/presentation/widgets/bottom_pad_item.dart';
-import 'package:taxi_line/features/cab/presentation/widgets/waiting_bottom_sheet.dart';
 
 class BottomControllPad extends ConsumerStatefulWidget {
   const BottomControllPad({
@@ -19,7 +19,7 @@ class BottomControllPad extends ConsumerStatefulWidget {
 
 class _BottomControllPadState extends ConsumerState<BottomControllPad> {
   late final TripController tripController;
-  TripCategory tripCategory = TripCategory.Regualar;
+  TripCategory tripCategory = TripCategory.regualar;
 
   @override
   void initState() {
@@ -53,11 +53,11 @@ class _BottomControllPadState extends ConsumerState<BottomControllPad> {
               BottomPadItem(
                 imageAddress: 'assets/images/uber.jpg',
                 itemName: 'Uber',
-                isSelected: tripCategory == TripCategory.Regualar,
+                isSelected: tripCategory == TripCategory.regualar,
                 onTap: () {
-                  if (tripCategory != TripCategory.Regualar) {
+                  if (tripCategory != TripCategory.regualar) {
                     setState(() {
-                      tripCategory = TripCategory.Regualar;
+                      tripCategory = TripCategory.regualar;
                     });
                   }
                 },
@@ -65,11 +65,11 @@ class _BottomControllPadState extends ConsumerState<BottomControllPad> {
               BottomPadItem(
                 imageAddress: 'assets/images/uber_plus.jpg',
                 itemName: 'UberPlus',
-                isSelected: tripCategory == TripCategory.Plus,
+                isSelected: tripCategory == TripCategory.plus,
                 onTap: () {
-                  if (tripCategory != TripCategory.Plus) {
+                  if (tripCategory != TripCategory.plus) {
                     setState(() {
-                      tripCategory = TripCategory.Plus;
+                      tripCategory = TripCategory.plus;
                     });
                   }
                 },
@@ -77,11 +77,11 @@ class _BottomControllPadState extends ConsumerState<BottomControllPad> {
               BottomPadItem(
                 imageAddress: 'assets/images/van.jpg',
                 itemName: 'UberVan',
-                isSelected: tripCategory == TripCategory.Van,
+                isSelected: tripCategory == TripCategory.van,
                 onTap: () {
-                  if (tripCategory != TripCategory.Van) {
+                  if (tripCategory != TripCategory.van) {
                     setState(() {
-                      tripCategory = TripCategory.Van;
+                      tripCategory = TripCategory.van;
                     });
                   }
                 },
@@ -93,11 +93,8 @@ class _BottomControllPadState extends ConsumerState<BottomControllPad> {
                     final newTrip =
                         await tripController.postTripRequestToDataBase(
                             cabController.direction!, 0, tripCategory);
-                    showBottomSheet(
-                        context: context,
-                        builder: (ctx) => WaitingBottomSheet(
-                              trip: newTrip,
-                            ));
+
+                      Navigator.of(context).pushNamed(WaitingScreen.routeName,arguments: newTrip);
                   },
                   child: const Text('Get A Cab'),
                   style: ElevatedButton.styleFrom(
@@ -106,7 +103,7 @@ class _BottomControllPadState extends ConsumerState<BottomControllPad> {
                       ),
                       fixedSize: Size(size.width * 0.9, 50)),
                 ),
-              )
+              ),
             ],
           ),
         ),

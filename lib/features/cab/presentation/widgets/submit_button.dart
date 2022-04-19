@@ -5,20 +5,13 @@ import 'package:latlong2/latlong.dart';
 
 import 'package:taxi_line/core/service_locator.dart';
 import 'package:taxi_line/features/cab/presentation/controllers/cab_controller.dart';
-import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
-import 'package:taxi_line/features/cab/presentation/widgets/bottom_controll_pad.dart';
+import 'package:taxi_line/features/cab/presentation/controllers/geo_code_controller.dart';
 
-import '../controllers/geo_code_controller.dart';
 
-// final cabControllerProvider = ChangeNotifierProvider(
-//   (ref) => CabController(),
-// );
 
 class SubmitButton extends ConsumerWidget {
-  // final Size size;
   final MapController mapController;
   final LatLng mapCurrrentPoint;
-  // final VoidCallback onPressed;
 
   const SubmitButton({
     Key? key,
@@ -46,10 +39,7 @@ class SubmitButton extends ConsumerWidget {
               final address = await geoController.geoCodeLatnLngToAddress(
                   mapCurrrentPoint.latitude, mapCurrrentPoint.longitude);
               if (cabController.startTripAddress == null) {
-                print('address : $address');
                 cabController.startTripAddress = address;
-
-                print(cabController.startTripAddress);
               } else {
                 cabController.finishTripAddress = address;
                 final centerZoom = mapController.centerZoomFitBounds(
@@ -59,54 +49,10 @@ class SubmitButton extends ConsumerWidget {
                 cabController.getDirectionForPoints();
                 mapController.move(mapCurrrentPoint, 18.4);
                 mapController.move(centerZoom.center, centerZoom.zoom);
-                // showModalBottomSheet(
-                //     context: context,
-                //     builder: (ctx) => const BottomControllPad());
               }
             },
             child: const Text('Submit')),
       ),
     );
   }
-
-  // () async {
-  //                             if (ref.read(cabController).startTripAddress ==
-  //                                 null) {
-  //                               final tripStartPoint =
-  //                                   mapEventSnapshot.data!.center;
-  //                               final address =
-  //                                   await geoController.geoCodeLatnLngToAddress(
-  //                                       tripStartPoint.latitude,
-  //                                       tripStartPoint.longitude);
-  //                               // _startAddressTextFielController.text =
-  //                               //     address.placeAddress;
-  //                               ref.read(cabController).startTripAddress =
-  //                                   address;
-  //                               // setState(() {});
-  //                             } else {
-  //                               final tripFinishPoint =
-  //                                   mapEventSnapshot.data!.center;
-  //                               final address =
-  //                                   await geoController.geoCodeLatnLngToAddress(
-  //                                       tripFinishPoint.latitude,
-  //                                       tripFinishPoint.longitude);
-  //                               // _finishAddressTextFielController.text =
-  //                               //     address.placeAddress;
-  //                               // setState(() {});
-  //                               ref.read(cabController).finishTripAddress =
-  //                                   address;
-  //                               final centerZoom = _mapController
-  //                                   .centerZoomFitBounds(LatLngBounds(
-  //                                       ref.read(cabController).startTripPoint,
-  //                                       ref
-  //                                           .read(cabController)
-  //                                           .finishTripPoint));
-  //                               _mapController.move(
-  //                                   centerZoom.center, centerZoom.zoom);
-  //                               showModalBottomSheet(
-  //                                   context: context,
-  //                                   builder: (ctx) =>
-  //                                       const BottomControllPad());
-  //                             }
-  //                           },
 }

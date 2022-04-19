@@ -10,9 +10,10 @@ class UpdateTripUseCase {
 
   Future<Trip> call(Trip trip) async {
     try {
-      return await tripRepository.updateTripInDataBase(trip); 
+      final updatedTrip =  await tripRepository.updateTripInDataBase(trip); 
+      return updatedTrip;
     } catch (error) {
-      throw UnimplementedError();
+      rethrow;
     }
   }
 }

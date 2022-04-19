@@ -1,3 +1,4 @@
+import 'package:taxi_line/features/accounting/domain/entity/user_entity.dart';
 import 'package:taxi_line/features/accounting/domain/repository/user_repositor.dart';
 
 class LoginUserUseCase {
@@ -7,13 +8,13 @@ class LoginUserUseCase {
     required this.userRepository,
   });
 
-  call(String email, String password) async {
+  Future<MyUser> call(String email, String password) async {
     try {
       final user =
-          await userRepository.loginUserWithEmailAndPassword(email, password);  
+          await userRepository.loginUserWithEmailAndPassword(email, password);
+      return user;
     } catch (error) {
-      print(error);
-      throw UnimplementedError();
+      rethrow;
     }
   }
 }

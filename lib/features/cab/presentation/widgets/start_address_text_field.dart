@@ -2,25 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:taxi_line/features/cab/presentation/controllers/cab_controller.dart';
-import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
 
-// final cabControllerProvider =
-//     ChangeNotifierProvider.autoDispose<CabController>(((ref) => CabController()));
 
 class StartTextField extends ConsumerWidget {
   const StartTextField({
     Key? key,
-    // required this.tripStartPoint,
-    // required TextEditingController startAddressTextFielController,
   }) : super(key: key);
-
-  // final LatLng? tripStartPoint ;
-  // final TextEditingController _startAddressTextFielController ;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cabController = ref.watch(cabControllerProvider);
-    print('start : ${cabController.startTripAddress}');
     final _startAddressTextFielController = TextEditingController(
         text: cabController.startTripAddress?.placeAddress);
     final LatLng? tripStartPoint = cabController.startTripPoint;

@@ -8,9 +8,12 @@ class PostTripRequestUseCase {
     required this.tripRepository,
   });
 
-
   Future<Trip> call(Trip trip) async {
-    final response = await tripRepository.postTripToDataBase(trip);
-    return response;
+    try {
+      final response = await tripRepository.postTripToDataBase(trip);
+      return response;
+    } catch (error) {
+      rethrow;
+    }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
+import 'package:taxi_line/features/cab/presentation/controllers/cab_controller.dart';
 
 class CancelButton extends ConsumerWidget {
   const CancelButton({

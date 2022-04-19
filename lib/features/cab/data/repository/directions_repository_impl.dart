@@ -1,4 +1,5 @@
 import 'package:latlong2/latlong.dart';
+import 'package:taxi_line/core/error.dart';
 
 import 'package:taxi_line/features/cab/data/datasource/direction_data_source.dart';
 import 'package:taxi_line/features/cab/data/model/direction.dart';
@@ -16,8 +17,8 @@ class DirectionsRepositoryImpl implements DirectionsRepository {
     try {
       final response  = await directionDataSource.fetchDirections(firstPoint, secondPoint);
       return response;
-    } catch (error) {
-      throw UnimplementedError();
+    } catch(exception) {
+      throw Error(message: exception.toString());
     }
   }
 

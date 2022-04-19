@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
+import 'package:taxi_line/features/cab/presentation/controllers/cab_controller.dart';
 
 class GpsIcon extends ConsumerWidget {
   final LatLng userLocation;
@@ -33,7 +33,6 @@ class GpsIcon extends ConsumerWidget {
         child: IconButton(
           onPressed: () {
             final x = mapController.move(userLocation, 18.4,id: 'gps');
-            print('x : $x');
           },
           icon: const Icon(
             Icons.gps_fixed_sharp,

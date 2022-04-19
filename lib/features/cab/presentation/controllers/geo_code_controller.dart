@@ -14,12 +14,14 @@ class GeoCodeController {
   });
 
   Future<List<Address>> geoCodeAddressToLatLng(String addressText) async {
-    return await addressToLatLngUseCase(addressText);
+    final latLngList =  await addressToLatLngUseCase(addressText);
+    return latLngList;
   }
 
 
   Future<Address> geoCodeLatnLngToAddress(double latitude,double longitude) async {
-    return await latLngToAddressUseCase(latitude,longitude);
+    final address =  await latLngToAddressUseCase(latitude,longitude);
+    return address;
   }
 
 }

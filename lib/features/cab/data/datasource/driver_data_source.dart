@@ -9,6 +9,7 @@ abstract class DriverDataSource {
   Stream<LatLng> getTripDriverLocationStreamFromDB(String driverId);
   Future<List<LatLng>> getDriversLocationFromDB();
   Future<LatLng> getTripDriversLocationFromDB(String driverId);
+  Future<void> updateDriverCreditInDB(String driverId,double credit);
 }
 
 class DriverDataSourceImpl implements DriverDataSource {
@@ -41,6 +42,9 @@ class DriverDataSourceImpl implements DriverDataSource {
     try {
       final dbRef = FirebaseDatabase.instance.ref().child('availableDrivers');
       final availableDriversMap = await dbRef.get();
+      if (availableDriversMap.value == null) {
+        return [];
+      }
       final locations = availableDriversMap.children.map((dataSnapshot) {
         final snapshot = dataSnapshot.value as dynamic;
         return LatLng(snapshot['location']['latitude'],snapshot['location']['longitude']);
@@ -75,6 +79,20 @@ class DriverDataSourceImpl implements DriverDataSource {
       final locationData = response.value as dynamic;
       final location = LatLng(locationData['location']['latitude'],locationData['location']['longitude']);
       return location;
+    } catch (exception) {
+      throw Exception(exception.toString());
+    }
+  }
+
+  @override
+  Future<void> updateDriverCreditInDB(String driverId, double credit) async {
+    try {
+      final dbRef = FirebaseDatabase.instance.ref().child('drivers').child(driverId);
+      final updateMap = {
+        'credit' : credit
+      };
+      final response = await dbRef.update(updateMap);
+      return response;
     } catch (exception) {
       throw Exception(exception.toString());
     }

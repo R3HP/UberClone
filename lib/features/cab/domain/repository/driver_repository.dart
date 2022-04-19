@@ -7,4 +7,5 @@ abstract class DriverRepository{
   Future<List<LatLng>> getAvailableDriversLocation();
   Stream<LatLng> getTripDriversLocationStream(String driverId);
   Future<LatLng> getTripDriversLocation(String driverId);
+  Future<void> updateDriverCredit(String driverId,double credit);
 }

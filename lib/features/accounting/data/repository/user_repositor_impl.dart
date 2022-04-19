@@ -1,3 +1,4 @@
+import 'package:taxi_line/core/error.dart';
 import 'package:taxi_line/features/accounting/data/datasource/user_data_source.dart';
 import 'package:taxi_line/features/accounting/domain/entity/user_entity.dart';
 import 'package:taxi_line/features/accounting/domain/repository/user_repositor.dart';
@@ -14,8 +15,8 @@ class UserRepositoryImpl implements UserRepository {
     try{
       final user = await userDataSource.loginWithEmailAndPassword(email, password);
       return user;
-    }catch (error){
-      throw UnimplementedError();
+    }catch (exception) {
+      throw Error(message: exception.toString());
     }
   }
 
@@ -24,8 +25,8 @@ class UserRepositoryImpl implements UserRepository {
     try{
       final user = await userDataSource.createUserWithEmailAndPassword(userName, email, password);
       return user;
-    }catch(error){
-      throw UnimplementedError();
+    }catch (exception) {
+      throw Error(message: exception.toString());
     }
   }
 }

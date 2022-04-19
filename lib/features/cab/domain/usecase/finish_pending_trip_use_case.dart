@@ -1,19 +1,22 @@
 import 'package:taxi_line/features/cab/data/model/trip.dart';
 import 'package:taxi_line/features/cab/domain/repository/trip_repository.dart';
 
-class GetPendedTripUseCase {
+class FinishPendingTripUseCase {
   final TripRepository tripRepository;
 
-  GetPendedTripUseCase({
+  FinishPendingTripUseCase({
     required this.tripRepository,
   });
 
-  Future<Trip> call(Trip trip) async {
+
+  Future<void> call(Trip trip) async {
     try {
-      final response = await tripRepository.getPendedTripFromDataBase(trip);
-      return response;
+      await tripRepository.deletePendingTripFromDataBase(trip.id!);
+      await tripRepository.createFinishedTripInTripsDataBase(trip);
+      return;
     } catch (error) {
       rethrow;
     }
   }
+  
 }

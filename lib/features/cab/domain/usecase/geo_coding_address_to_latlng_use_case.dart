@@ -10,11 +10,10 @@ class GeoCodingAddressToLatLngUseCase {
 
   Future<List<Address>> call(String address) async {
     try{
-      final latLng = await geoCodingRepostory.addressToLatLng(address);
-      return latLng;
+      final latLngList = await geoCodingRepostory.addressToLatLng(address);
+      return latLngList;
     }catch(error){
-      print(error.toString());
-      throw UnimplementedError();
+      rethrow;
     }
   }
 

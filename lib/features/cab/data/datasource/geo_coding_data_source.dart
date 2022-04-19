@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:taxi_line/core/constants.dart';
 import 'package:taxi_line/features/cab/data/model/address.dart';
 
 abstract class GeoCodingDataSource {
@@ -16,32 +17,37 @@ class GeoCodingDataSourceImpl implements GeoCodingDataSource {
   });
   @override
   Future<List<Address>> geoCodeAddressToLatLng(String addressText) async {
-    final forwardGeoCodeUrl =
-        'https://api.mapbox.com/geocoding/v5/mapbox.places/$addressText.json?access_token=pk.eyJ1IjoicjN6YWhwIiwiYSI6ImNrYnhmc2JhbzA1bTAyc3Fubm5paHZqd2sifQ.kiQxWPBep95bN00r41U7Rg';
-    final url = Uri.parse(forwardGeoCodeUrl);
-    final response = await dio.getUri(url);
-    // if (response.statusCode > 300) {
-    //   // Exception Should be thrown
-    //   throw UnimplementedError();
-    // }
-    final responseMap = json.decode(response.data) as Map<String, dynamic>;
-    final features = responseMap['features'] as List<dynamic>;
-    return features.map((feature) => Address.fromMap(feature)).toList();
+    try {
+      final forwardGeoCodeUrl =
+          'https://api.mapbox.com/geocoding/v5/mapbox.places/$addressText.json?access_token=$Your_Primary_Key';
+      final url = Uri.parse(forwardGeoCodeUrl);
+      final response = await dio.getUri(url);
+      final responseMap = json.decode(response.data) as Map<String, dynamic>;
+      final features = responseMap['features'] as List<dynamic>;
+      return features.map((feature) => Address.fromMap(feature)).toList();
+    } catch (exception) {
+      throw Exception(exception.toString());
+    }
   }
 
   @override
   Future<Address> geoCodeLatLngToAddress(
       double addressLatitude, double addressLongitude) async {
-    final backwardGeoCodeUrl =
-        'https://api.mapbox.com/geocoding/v5/mapbox.places/$addressLongitude,$addressLatitude.json?access_token=pk.eyJ1IjoicjN6YWhwIiwiYSI6ImNrYnhmc2JhbzA1bTAyc3Fubm5paHZqd2sifQ.kiQxWPBep95bN00r41U7Rg';
-    final url = Uri.parse(backwardGeoCodeUrl);
-    final response = await dio.getUri(url);
-    if (response.statusCode! > 300) {
-      throw UnimplementedError();
+    try {
+      final backwardGeoCodeUrl =
+          'https://api.mapbox.com/geocoding/v5/mapbox.places/$addressLongitude,$addressLatitude.json?access_token=$Your_Primary_Key';
+      final url = Uri.parse(backwardGeoCodeUrl);
+      final response = await dio.getUri(url);
+      if (response.statusCode! > 300) {
+        throw Exception('status Code ${response.statusCode}');
+      }
+      final responseMap = json.decode(response.data) as Map<String, dynamic>;
+      final features = responseMap['features'] as List<dynamic>;
+      // using copy with we raturn an address with exact latLon as requested other wise a latLng that is returned by GeoCoding Api is returned
+      return Address.fromMap(features[0])
+          .copyWith(latitude: addressLatitude, longitude: addressLongitude);
+    } catch (exception) {
+      throw Exception(exception.toString());
     }
-    final responseMap = json.decode(response.data) as Map<String, dynamic>;
-    final features = responseMap['features'] as List<dynamic>;
-    // using copy with we raturn an address with exact latLon as requested other wise a latLng that is returned by GeoCoding Api is returned 
-    return Address.fromMap(features[0]).copyWith(latitude: addressLatitude,longitude: addressLongitude);
   }
 }

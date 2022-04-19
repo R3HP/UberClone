@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
 
-import 'package:taxi_line/features/cab/data/model/direction.dart' as direction ;
+import 'package:taxi_line/features/cab/data/model/route.dart' as my_route;
+import 'package:taxi_line/features/cab/presentation/controllers/cab_controller.dart';
 
 
 class BottomPadItem extends ConsumerWidget {
@@ -32,13 +32,6 @@ class BottomPadItem extends ConsumerWidget {
                 ? Border.all(color: Theme.of(context).primaryColor,width: 2)
                 : null),
         child: ListTile(
-            // shape: isSelected
-            //     ? RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(2),
-            //         side: BorderSide(
-            //             color: Theme.of(context).primaryColor, width: 1),
-            //       )
-            //     : null,
             leading: CircleAvatar(
                 foregroundImage: AssetImage(imageAddress), radius: 25),
             title: Text(itemName),
@@ -49,19 +42,12 @@ class BottomPadItem extends ConsumerWidget {
                 'Minutes'),
             trailing: Text('\$' + price.toStringAsFixed(2)),
             onTap: onTap
-            // () {
-            //   if (tripCategory != TripCategory.Van) {
-            //     setState(() {
-            //       tripCategory = TripCategory.Van;
-            //     });
-            //   }
-            // },
             ),
       ),
     );
   }
 
-  double determinePriceBaseItemName(direction.Route route) {
+  double determinePriceBaseItemName(my_route.Route route) {
     switch (itemName) {
       case 'Uber':
         return route.calculateRegularPrice();

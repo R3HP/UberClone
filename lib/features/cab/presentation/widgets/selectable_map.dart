@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxi_line/features/cab/presentation/controllers/cab_controller.dart';
-import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
 import 'package:taxi_line/features/cab/presentation/widgets/bottom_controll_pad.dart';
 import 'package:latlong2/latlong.dart' as latlong;
 import 'package:taxi_line/features/cab/presentation/widgets/cancel_button.dart';
@@ -48,10 +47,6 @@ class _SelectableMapState extends State<SelectableMap> {
             center: widget.userLocation,
             zoom: 18.4),
         builder: (context, AsyncSnapshot<MapEvent> mapEventSnapshot) {
-          print(
-              'map event snapshot ' + mapEventSnapshot.data!.center.toString());
-          print('startTripPoint');
-          // print(cabController.startTripPoint);
           return Consumer(
             builder: (context, ref, child) {
               final cabController = ref.watch(cabControllerProvider);
@@ -65,7 +60,6 @@ class _SelectableMapState extends State<SelectableMap> {
                             ? 0
                             : MediaQuery.of(context).size.height * 0.40),
                     child: FlutterMapConfigured(
-                        // cabController: cabController,
                         mapController: mapController,
                         startPosition: widget.userLocation,
                         currentPosition: mapEventSnapshot.data!.center),

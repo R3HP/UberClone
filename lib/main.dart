@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxi_line/core/service_locator.dart';
 import 'package:taxi_line/features/accounting/presentation/screen/auth_screen.dart';
 import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
+import 'package:taxi_line/features/cab/presentation/screens/waiting_screen.dart';
 import 'package:taxi_line/features/main_screen/home_screen.dart';
 
 Future<void> main() async {
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TaxiLine',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
@@ -30,13 +32,14 @@ class MyApp extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();
             } else if (snapshot.hasData && snapshot.data != null) {
-              return const HomeScreen();
+              return const CabScreen();
             } else {
               return const AuthScreen();
             }
           }),
       routes: {
-        CabScreen.routeName: (ctx) =>  CabScreen(),
+        CabScreen.routeName: (ctx) =>  const CabScreen(),
+        WaitingScreen.routeName : (ctx) => const WaitingScreen()
       },
     );
   }
@@ -45,9 +48,13 @@ class MyApp extends StatelessWidget {
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('splash shhhhohhh'),
+    return  const Scaffold(
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Center(
+          child: CircularProgressIndicator.adaptive(),
+        ),
       ),
     );
   }

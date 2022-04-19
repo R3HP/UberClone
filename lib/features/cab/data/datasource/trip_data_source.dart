@@ -3,7 +3,9 @@ import 'package:taxi_line/features/cab/data/model/trip.dart';
 
 abstract class TripDataSource{
   Future<Trip> postTripToDB(Trip trip);
-  Future<void> deleteTripFromDB(String tripId);
+  Future<void> deleteTripRequestFromDB(String tripId);
+  Future<void> deletePendingTripFromDB(String tripId);
+  Future<void> createTripInFinishedTripDB(Trip trip);
   Future<Trip> updateTripInDB(Trip trip);
   Future<Trip> getPendingTrip(Trip trip);
 
@@ -17,19 +19,19 @@ class TripDataSourceImpl implements TripDataSource{
     final refrence = FirebaseDatabase.instance.ref().child('tripRequests').push();
     final response = await refrence.set(trip.toMap());
     return trip.copyWith(id: refrence.key);
-    }catch(error){
-      throw UnimplementedError();
+    }catch(exception) {
+      throw Exception(exception.toString());
     }
   }
 
   @override
-  Future<void> deleteTripFromDB(String tripId) async {
+  Future<void> deleteTripRequestFromDB(String tripId) async {
     try {
       final refrence = FirebaseDatabase.instance.ref().child('tripRequests').child(tripId);
       final response = await refrence.remove();
       return response;
-    } catch (error) {
-      throw UnimplementedError();
+    } catch(exception) {
+      throw Exception(exception.toString());
     }
   }
 
@@ -42,8 +44,8 @@ class TripDataSourceImpl implements TripDataSource{
       final refrence = FirebaseDatabase.instance.ref().child('tripRequests').child(trip.id!);
       await refrence.update(trip.toMap());
       return trip;
-    } catch (error) {
-      throw UnimplementedError();
+    }catch(exception) {
+      throw Exception(exception.toString());
     }
   }
 
@@ -57,8 +59,32 @@ class TripDataSourceImpl implements TripDataSource{
       final event = await dbRef.onChildAdded.firstWhere((databaseEvent) => databaseEvent.snapshot.key == trip.id);
       final pendedTrip = Trip.fromFirebaseMap(event.snapshot.value);
       return pendedTrip;
-    } catch (error) {
-      throw UnimplementedError();
+    }catch(exception) {
+      throw Exception(exception.toString());
+    }
+  }
+
+  
+
+  @override
+  Future<void> createTripInFinishedTripDB(Trip trip) async {
+    try {
+      final dbRef = FirebaseDatabase.instance.ref().child('trips').child(trip.id!);
+      final response = await dbRef.set(trip.toMap());
+      return ;
+    }catch(exception) {
+      throw Exception(exception.toString());
+    }
+  }
+
+  @override
+  Future<void> deletePendingTripFromDB(String tripId) async {
+    try {
+      final dbRef = FirebaseDatabase.instance.ref().child('pendingTrips').child(tripId);
+      final response = await dbRef.remove();
+      return response;
+    } catch (exception) {
+      throw Exception(exception.toString());
     }
   }
 }

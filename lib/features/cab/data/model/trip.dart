@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'package:taxi_line/features/cab/data/model/direction.dart';
+import 'package:taxi_line/features/cab/data/model/route.dart';
+import 'package:taxi_line/features/cab/data/model/waypoint.dart';
 
 class Trip {
   final String? id;

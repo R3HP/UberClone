@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
-import 'package:taxi_line/features/cab/presentation/widgets/bottom_controll_pad.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,42 +11,60 @@ class HomeScreen extends StatefulWidget {
 var index = 0;
 
 var screens = [
-  HomePage(),
+  const HomePage(),
 ];
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomBottomNavigation(
-        onTap: (index) {
-          print('it should setState');
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (value) {
+          
         },
-        items: const [
-          BottomNavigationBarItem(
+        items: [
+        const BottomNavigationBarItem(
               icon: Icon(
                 Icons.home_outlined,
               ),
               activeIcon: Icon(Icons.home),
               label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.wallet_giftcard_outlined,
-              ),
-              activeIcon: Icon(Icons.wallet_giftcard),
-              label: 'Wallet'),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.history_outlined,
-              ),
-              activeIcon: Icon(Icons.history),
-              label: 'History'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.more_horiz_rounded),
-              activeIcon: Icon(Icons.more),
-              label: 'More'),
-        ],
-      ),
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.person_outlined),
+          activeIcon: Icon(Icons.person),
+          label: 'UserPage'
+
+          )
+      ]),
+      // CustomBottomNavigation(
+      //   onTap: (index) {
+      //     print('it should setState');
+      //   },
+      //   items: const [
+          // BottomNavigationBarItem(
+          //     icon: Icon(
+          //       Icons.home_outlined,
+          //     ),
+          //     activeIcon: Icon(Icons.home),
+          //     label: 'Home'),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(
+      //           Icons.wallet_giftcard_outlined,
+      //         ),
+      //         activeIcon: Icon(Icons.wallet_giftcard),
+      //         label: 'Wallet'),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(
+      //           Icons.history_outlined,
+      //         ),
+      //         activeIcon: Icon(Icons.history),
+      //         label: 'History'),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.more_horiz_rounded),
+      //         activeIcon: Icon(Icons.more),
+      //         label: 'More'),
+      //   ],
+      // ),
       // bottomNavigationBar: BottomNavigationBar(items: [BottomNavigationBarItem(icon: Icon(Icons.abc))],),
       floatingActionButton: Padding(
           padding: const EdgeInsets.only(top: 35),
@@ -105,8 +122,8 @@ class HomePage extends StatelessWidget {
             ),
             leading: Image.asset('assets/images/uber_plus.jpg'),
             title: const Text('UberPlus'),
-            subtitle: Text('KM'),
-            trailing: Text('\$'),
+            subtitle: const Text('KM'),
+            trailing: const Text('\$'),
             onTap: () {},
           ),
         ),
@@ -114,43 +131,25 @@ class HomePage extends StatelessWidget {
           child: Stack(
             children: [
               Container(
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+      padding: const EdgeInsets.all(20),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.vertical(top: const Radius.circular(25)),
         color: Colors.white,
         backgroundBlendMode: BlendMode.srcOver
       ),
       child: Column(
         children: [
           ListTile(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),side: BorderSide(color: Colors.cyan)),
-            title: Text('ssssss'),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),side: const BorderSide(color: Colors.cyan)),
+            title: const Text('ssssss'),
           ),
           ListTile(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),side: BorderSide(color: Colors.cyan)),
-            title: Text('ssssss'),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),side: const BorderSide(color: Colors.cyan)),
+            title: const Text('ssssss'),
           ),
         ],
       ),
-    )
-              // Container(
-              //   padding: EdgeInsets.all(20),
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.vertical(top: Radius.circular(25))
-              //   ),
-              //   child: Column(
-              //     children: [
-              //       ListTile(
-              //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),side: BorderSide(color: Colors.cyan)),
-              //         title: Text('ssssss'),
-              //       ),
-              //       ListTile(
-              //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),side: BorderSide(color: Colors.cyan)),
-              //         title: Text('ssssss'),
-              //       ),
-              //     ],
-              //   ),
-              // )
+    ),
             ],
           ),
         )
@@ -178,9 +177,6 @@ class CustomBottomNavigation extends StatelessWidget {
           size: Size(size.width, 80),
           painter: BottomNavigationBarPainter(
               bgColor: Theme.of(context).colorScheme.primary),
-          // child: Row(
-          //   children: items.map((item) => item.icon).toList(),
-          // ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 35.0),
@@ -198,36 +194,6 @@ class CustomBottomNavigation extends StatelessWidget {
             ],
           ),
         )
-        // Container(
-        //   width: size.width,
-        //   height: 80,
-        //   child: ListView.builder(
-        //       scrollDirection: Axis.horizontal,
-
-        //       shrinkWrap: true,
-        //       physics: const NeverScrollableScrollPhysics(),
-        //       itemCount: items.length + 1,
-        //       itemBuilder: (ctx, index) {
-        //         if (index == 2) {
-        //           return const SizedBox(
-        //             width: 20,
-        //           );
-        //         } else {
-        //           if (index > 2) {
-        //             return items[index - 1].icon;
-        //           } else {
-        //             return items[index].icon;
-        //           }
-        //           // Row(
-        //           //   children: [
-        //           //     items[index].icon,
-        //           //     Text(items[index].label!)
-        //           //   ],
-        //           // )
-        //         }
-        //       }),
-        // )
-        // BottomNavigationBar(items: items,onTap: onTap,backgroundColor: Colors.transparent,)
       ],
     );
   }

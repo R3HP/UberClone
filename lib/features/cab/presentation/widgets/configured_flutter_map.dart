@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart' as latlong;
+import 'package:taxi_line/core/constants.dart';
 import 'package:taxi_line/core/service_locator.dart';
 import 'package:taxi_line/features/cab/presentation/controllers/cab_controller.dart';
 import 'package:taxi_line/features/cab/presentation/controllers/driver_controller.dart';
-import 'package:taxi_line/features/cab/presentation/screens/cab_screen.dart';
 
 class FlutterMapConfigured extends ConsumerStatefulWidget {
   const FlutterMapConfigured({
@@ -68,10 +68,10 @@ class _FlutterMapConfiguredState extends ConsumerState<FlutterMapConfigured> {
           TileLayerWidget(
             options: TileLayerOptions(
                 urlTemplate:
-                    'https://api.mapbox.com/styles/v1/r3zahp/cl04yaeqh000a15l2i8zdxib7/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicjN6YWhwIiwiYSI6ImNrYnhmc2JhbzA1bTAyc3Fubm5paHZqd2sifQ.kiQxWPBep95bN00r41U7Rg',
+                    'https://api.mapbox.com/styles/v1/r3zahp/cl04yaeqh000a15l2i8zdxib7/tiles/256/{z}/{x}/{y}@2x?access_token=$Your_Primary_Key',
                 additionalOptions: {
                   'accessToken':
-                      'pk.eyJ1IjoicjN6YWhwIiwiYSI6ImNrYnhmc2JhbzA1bTAyc3Fubm5paHZqd2sifQ.kiQxWPBep95bN00r41U7Rg',
+                      Your_Primary_Key,
                   'id': 'mapbox.mapbox-streets-v8'
                 }),
           ),
